@@ -1,0 +1,16 @@
+import glob, os
+
+SAMPLES = [os.path.basename(f) for f in glob.glob('data/*.txt')]
+WORK_DIR ='/home/hwu/dev/play_snakemake'
+
+SAMPLES = [ i[:-4] for i in SAMPLES]
+
+rule all:
+    input: expand("fastq/{sample}.fastq", sample=SAMPLES)
+
+rule bam:
+    input: 'data/{sample}.txt'
+    output: 'fastq/{sample}.fastq'
+    shell: 'cp {input}  {output}'
+
+
