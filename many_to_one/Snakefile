@@ -1,0 +1,16 @@
+import glob, os
+
+SAMPLES = [os.path.basename(f) for f in glob.glob('data/*.txt')]
+WORK_DIR ='/home/hwu/dev/play_snakemake'
+
+SAMPLES = [ i[:-4] for i in SAMPLES]
+
+rule all:
+    input: 'combined.txt'
+
+rule bam:
+    input:  expand("data/{sample}.txt", sample=SAMPLES)
+    output: 'combined.txt'
+    shell: 'cat {input}  > {output}'
+
+
